@@ -16,18 +16,18 @@ Este projeto implementa um sistema de gerenciamento de frota para registrar veí
 - Gerar relatórios de eficiência e custos
 
 # ESTRUTURA
-/src <br>
+/veiculo <br>
  ├── dominio/ <br>
- │    ├── veiculo.py <br>
- │    ├── carro.py <br>
- │    ├── moto.py <br>
  │    ├── caminhao.py <br>
- │    ├── motorista.py <br>
+ │    ├── carro.py <br>
+ │    ├── estado.py <br>
  │    ├── mixins.py <br>
- │    ├── viagem.py <br>
- │    └── estado.py <br>
+ │    ├── moto.py <br>
+ │    ├── motorista.py <br>
+ │    ├── veiculo.py <br>
+ │    └── viagem.py <br>
  ├── repositorio/ <br>
  │    ├── json_repository.py <br>
  │    └── sqlite_repository.py <br>
- ├── settings.json <br>
- └── main.py <br>
+ ├── main.py <br>
+ └── settings.json <br>
