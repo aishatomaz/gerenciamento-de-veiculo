@@ -35,7 +35,7 @@ Este projeto implementa um sistema de gerenciamento de frota para registrar veí
  ├── settings.json <br>
  └── UML.md <br>
 
-# UML Textual — Sistema de Gerenciamento de Veículo
+# UML Textual 
 
 +-----------------------------------------------------+ <br>
 |                      VEICULO                        | <br>
