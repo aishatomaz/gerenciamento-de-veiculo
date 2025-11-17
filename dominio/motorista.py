@@ -2,7 +2,7 @@ from typing import List, Any
 from .veiculo import Veiculo
 
 class Pessoa:
-    """Classe base para herança Motorista[cite: 55]."""
+    """Classe base para herança Motorista."""
     def __init__(self, nome: str, cpf: str):
         self._nome = nome
         self._cpf = cpf
