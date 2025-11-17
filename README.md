@@ -29,5 +29,8 @@ Este projeto implementa um sistema de gerenciamento de frota para registrar veí
  ├── repositorio/ <br>
  │    ├── json_repository.py <br>
  │    └── sqlite_repository.py <br>
+ ├── LICENSE <br>
  ├── main.py <br>
- └── settings.json <br>
+ ├── README.md <br>
+ ├── settings.json <br>
+ └── UML.md <br>
