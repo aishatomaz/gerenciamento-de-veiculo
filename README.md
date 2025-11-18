@@ -16,7 +16,7 @@ Este projeto implementa um sistema de gerenciamento de frota para registrar veí
 - Gerar relatórios de eficiência e custos
 
 # ESTRUTURA
-` /veiculo <br>
+/veiculo <br>
  ├── dominio/ <br>
  │    ├── caminhao.py <br>
  │    ├── carro.py <br>
@@ -33,7 +33,7 @@ Este projeto implementa um sistema de gerenciamento de frota para registrar veí
  ├── main.py <br>
  ├── README.md <br>
  ├── settings.json <br>
- └── UML.md <br> `
+ └── UML.md <br> 
 
 # UML Textual 
 
