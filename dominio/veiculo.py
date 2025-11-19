@@ -6,7 +6,7 @@ class Veiculo:
     Classe base para todos os veículos da frota. Aplica encapsulamento
     e define atributos e métodos especiais comuns.
     """
-    def __init__(self, placa: str, marca: str, modelo: str, ano: int, quilometragem: float, consumo_medio: float, tipo: str):
+    def __init__(self, placa, marca, modelo, ano, quilometragem, consumo_medio, float, tipo):
         """
         Inicializa um veículo com seus dados mínimos.
         O tipo deve ser ('Carro', 'Moto' ou 'Caminhao').
@@ -18,6 +18,14 @@ class Veiculo:
         self._tipo = tipo
         # Outros atributos...
         pass
+
+    @property
+    def quilometragem_atual (self):
+        """
+        Novos dados atribuídos a quilometragem do veículo
+        """
+        self.quilometragem_atual += quilometragem
+
     
     def __str__(self) -> str:
         """Método especial para fornecer um resumo legível do veículo."""
