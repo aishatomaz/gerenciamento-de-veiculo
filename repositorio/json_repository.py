@@ -1,34 +1,23 @@
-from typing import Any, Optional, List
+import json
+from typing import Any, List, Optional
 
-class Repository:
+
+class JsonRepository:
     """
-    Classe abstrata/interface (padrão Repository) para definir
-    o contrato de persistência (CRUD).
+    Repositório muito simples para salvar/ler listas de dicionários em JSON.
+    Implementação intencionalmente mínima para a Entrega 2.
     """
-    def criar(self, item: Any) -> None:
-        """Salva um novo objeto."""
-        pass
 
-    def ler(self, id_chave: str) -> Optional[Any]:
-        """Busca um objeto pelo identificador (placa/cpf)."""
-        pass
+    def __init__(self, arquivo: str):
+        self.arquivo = arquivo
 
-    def atualizar(self, item: Any) -> None:
-        """Atualiza um objeto existente."""
-        pass
+    def salvar(self, dados: List[dict]) -> None:
+        with open(self.arquivo, "w", encoding="utf-8") as f:
+            json.dump(dados, f, ensure_ascii=False, indent=2)
 
-    def excluir(self, id_chave: str) -> None:
-        """Remove um objeto do repositório."""
-        pass
-
-    def listar_todos(self) -> List[Any]:
-        """Retorna todos os objetos no repositório."""
-        pass
-
-class JsonRepository(Repository):
-    """
-    Implementação do Repository que utiliza arquivos JSON para persistência.
-    """
-    def __init__(self, nome_arquivo: str):
-        self._nome_arquivo = nome_arquivo
-        pass
+    def carregar(self) -> Optional[List[dict]]:
+        try:
+            with open(self.arquivo, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return None
