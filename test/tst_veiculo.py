@@ -18,5 +18,6 @@ def test_setters_veiculo(veiculo_base):
 def test_veiculo_enum_estado_default():
     from dominio.estado import EstadoVeiculo
     v = Veiculo("AAA0000", "Ford", "Ka", 2019, 5000)
-    # O estado do veículo é definido depois _> adicionar alterações futuramente
+    # O estado do veículo é definido depois -> adicionar alterações futuramente
     assert hasattr(v, "_Veiculo__quilometragem")  # encapsulado
+
