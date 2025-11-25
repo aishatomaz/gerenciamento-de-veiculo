@@ -36,7 +36,7 @@ class Veiculo:
         self.__ano = ano
         self.__quilometragem = float(max(0.0, quilometragem))
         self.__consumo_medio = float(max(0.0, consumo_medio))
-        self.__status = EstadoVeiculo.ATIVO
+        self.__status = EstadoVeiculo.ATIVO # define estado padrão do veículo como ATIVO
         self.__historico_eventos: List[str] = []
         
 

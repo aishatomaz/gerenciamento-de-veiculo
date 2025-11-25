@@ -56,5 +56,5 @@ class Viagem:
         try:
             self.motorista.registrar_viagem(self)
         except Exception:
-            # registrar_viagem pode não existir se Motorista não for do tipo esperado
+            # registrar_viagem pode não existir se Motorista não for do tipo esperado -> arrumar posteriormente
             pass
