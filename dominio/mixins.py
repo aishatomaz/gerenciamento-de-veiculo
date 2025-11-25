@@ -1,41 +1,37 @@
-from datetime import date
-from typing import Any
+from typing import List, Tuple
+
 
 class AbastecivelMixin:
     """
-    Mixin para adicionar a funcionalidade de registrar abastecimentos
-    e gerenciar o histórico de um veículo.
+    Mixin que adiciona comportamento de abastecimento a uma classe.
+    Guarda histórico de abastecimentos como tuples: (data, combustivel, litros, valor)
     """
-    def __init__(self):
-        # Inicializa o histórico de abastecimentos
-        self._historico_abastecimentos = []
 
-    def abastecer(self, data: date, litros: float, valor_pago: float) -> None:
-        """
-        Registra um novo evento de abastecimento e, futuramente, 
-        recalcula o consumo médio.
-        """
-        pass
+    def __init__(self, *args, **kwargs):
+        self._historico_abastecimentos: List[Tuple] = []
+        super().__init__(*args, **kwargs)  # permissivo para múltipla herança
+
+    def abastecer(self, data, combustivel: str, litros: float, valor: float) -> None:
+        self._historico_abastecimentos.append((data, combustivel, float(litros), float(valor)))
+
+    @property
+    def historico_abastecimentos(self):
+        return list(self._historico_abastecimentos)
+
 
 class ManutenivelMixin:
     """
-    Mixin para gerenciar o histórico de manutenções e o controle de
-    status (ativo/manutencao) de um veículo.
+    Mixin que adiciona comportamento de manutenção a uma classe.
+    Guarda histórico de manutenções como tuples: (data, tipo, custo, descricao)
     """
-    def __init__(self):
-        # Inicializa o histórico de manutenções
-        self._historico_manutencoes = []
 
-    def registrar_manutencao(self, tipo: str, custo: float, descricao: str) -> None:
-        """
-        Registra uma manutenção e atualiza o status do veículo (deve
-        mudar o status para MANUTENCAO e depois para ATIVO).
-        """
-        pass
-    
-    def __iter__(self) -> Any:
-        """
-        Método especial (__iter__) para iterar sobre o histórico de manutenções,
-        conforme o requisito de POO.
-        """
-        pass
+    def __init__(self, *args, **kwargs):
+        self._historico_manutencoes: List[Tuple] = []
+        super().__init__(*args, **kwargs)
+
+    def registrar_manutencao(self, data, tipo: str, custo: float, descricao: str = "") -> None:
+        self._historico_manutencoes.append((data, tipo, float(custo), descricao))
+
+    @property
+    def historico_manutencoes(self):
+        return list(self._historico_manutencoes)
