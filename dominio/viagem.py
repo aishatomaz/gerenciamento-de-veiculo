@@ -22,6 +22,9 @@ class Viagem:
         self.__destino = destino
         self.__distancia = float(distancia)
         self.__data = data or date.today()
+        
+        motorista.registrar_viagem(self)
+        veiculo.registrar_viagem(self)
 
     @property
     def motorista(self) -> Motorista:
@@ -56,5 +59,5 @@ class Viagem:
         try:
             self.motorista.registrar_viagem(self)
         except Exception:
-            # registrar_viagem pode não existir se Motorista não for do tipo esperado
+            # registrar_viagem pode não existir se Motorista não for do tipo esperado -> arrumar posteriormente
             pass
