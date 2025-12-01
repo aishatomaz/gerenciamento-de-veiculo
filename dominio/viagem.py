@@ -22,6 +22,9 @@ class Viagem:
         self.__destino = destino
         self.__distancia = float(distancia)
         self.__data = data or date.today()
+        
+        motorista.registrar_viagem(self)
+        veiculo.registrar_viagem(self)
 
     @property
     def motorista(self) -> Motorista:

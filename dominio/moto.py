@@ -10,3 +10,7 @@ class Moto(Veiculo, ManutenivelMixin, AbastecivelMixin):
         super().__init__(placa, marca, modelo, ano, quilometragem, consumo_medio, tipo='Moto')
         ManutenivelMixin.__init__(self)
         AbastecivelMixin.__init__(self)
+
+class Moto(Veiculo):
+    def tipo(self):
+        return "moto"

@@ -10,3 +10,7 @@ class Carro(Veiculo, ManutenivelMixin, AbastecivelMixin):
         super().__init__(placa, marca, modelo, ano, quilometragem, consumo_medio, tipo='Carro')
         ManutenivelMixin.__init__(self)
         AbastecivelMixin.__init__(self)
+        
+class Carro(Veiculo):
+    def tipo(self):
+        return "carro"

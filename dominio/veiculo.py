@@ -38,7 +38,7 @@ class Veiculo:
         self.__consumo_medio = float(max(0.0, consumo_medio))
         self.__status = EstadoVeiculo.ATIVO # define estado padrão do veículo como ATIVO
         self.__historico_eventos: List[str] = []
-        
+        self.__historico_viagens = []
 
     # --------------------
     # properties (getters/setters)
@@ -118,6 +118,11 @@ class Veiculo:
         # retorna cópia para evitar alteração externa direta
         return list(self.__historico_eventos)
 
+    @property
+    def historico_viagens(self):
+        return list(self.__historico_viagens)
+    
+    
     # --------------------
     # métodos principais
     # --------------------
@@ -136,6 +141,9 @@ class Veiculo:
         """Altera o status do veículo (validação feita pelo tipo)."""
         self.status = novo_status
         self.__historico_eventos.append(f"Status alterado para {novo_status.name}")
+
+    def registrar_viagem(self, viagem):
+        self.__historico_viagens.append(viagem)
 
     # Métodos especiais
     def __str__(self) -> str:

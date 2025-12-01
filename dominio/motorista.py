@@ -132,6 +132,9 @@ class Veiculo:
         """Adiciona um evento ao histórico do veículo."""
         self.__historico_eventos.append(str(evento))
 
+    def registrar_viagem(self, viagem):
+        self.__historico_viagens.append(viagem)
+
     def alterar_status(self, novo_status: EstadoVeiculo) -> None:
         """Altera o status do veículo (validação feita pelo tipo)."""
         self.status = novo_status
