@@ -2,6 +2,8 @@ from datetime import date
 from typing import Optional
 from .motorista import Motorista
 from .veiculo import Veiculo
+from mapper.viagm_mapper import ViagemMapper
+
 
 
 class Viagem:
@@ -61,3 +63,39 @@ class Viagem:
         except Exception:
             # registrar_viagem pode não existir se Motorista não for do tipo esperado -> arrumar posteriormente
             pass
+
+class ViagemCRUD:
+
+    def __init__(self, repo):
+        self.repo = repo
+
+    def salvar(self, viagem):
+        banco = self.repo.carregar()
+        viagem_dict = ViagemMapper.to_dict(viagem)
+
+        banco["viagens"].append(viagem_dict)
+        self.repo.salvar(banco)
+
+    def listar(self):
+        banco = self.repo.carregar()
+        return [
+            ViagemMapper.to_object(dados, self.repo)
+            for dados in banco["viagens"]
+        ]
+
+    def buscar(self, motorista_cpf: str, placa_veiculo: str):
+        banco = self.repo.carregar()
+        for v in banco["viagens"]:
+            if v["motorista"] == motorista_cpf and v["veiculo"] == placa_veiculo:
+                return ViagemMapper.to_object(v, self.repo)
+        return None
+
+    def remover(self, motorista_cpf: str, placa_veiculo: str):
+        banco = self.repo.carregar()
+
+        banco["viagens"] = [
+            v for v in banco["viagens"]
+            if not (v["motorista"] == motorista_cpf and v["veiculo"] == placa_veiculo)
+        ]
+
+        self.repo.salvar(banco)
