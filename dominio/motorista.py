@@ -4,7 +4,7 @@ from .estado import EstadoVeiculo
 
 class Veiculo:
     """
-    Classe base para veículos da frota.
+    Base class.
 
     Attributes:
         __placa (str)
@@ -18,7 +18,7 @@ class Veiculo:
         __historico_eventos (List[str])
     """
 
-    def __init__(
+    def __init__(self, nome, cpf, categoria_cnh, experiencia, disponibilidade=True):
         self,
         placa: str,
         marca: str,
@@ -38,6 +38,12 @@ class Veiculo:
         self.__consumo_medio = float(max(0.0, consumo_medio))
         self.__status = EstadoVeiculo.ATIVO
         self.__historico_eventos: List[str] = []
+        self.nome = nome
+        self.cpf = cpf
+        self.categoria_cnh = categoria_cnh
+        self.experiencia = experiencia
+        self.disponibilidade = disponibilidade
+        self.historico_viagens = []
         
 
     # --------------------
@@ -133,7 +139,14 @@ class Veiculo:
         self.__historico_eventos.append(str(evento))
 
     def registrar_viagem(self, viagem):
-        self.__historico_viagens.append(viagem)
+        self.historico_viagens.append({
+            "origem": viagem.origem,
+            "destino": viagem.destino,
+            "distancia": viagem.distancia
+        })
+
+    def __str__(self):
+        return f"{self.nome} ({self.cpf})"
 
     def alterar_status(self, novo_status: EstadoVeiculo) -> None:
         """Altera o status do veículo (validação feita pelo tipo)."""

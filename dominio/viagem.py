@@ -3,6 +3,7 @@ from typing import Optional
 from .motorista import Motorista
 from .veiculo import Veiculo
 from mapper.viagm_mapper import ViagemMapper
+from dominio.estado import EstadoVeiculo
 
 
 
@@ -24,7 +25,6 @@ class Viagem:
         self.__destino = destino
         self.__distancia = float(distancia)
         self.__data = data or date.today()
-        
         motorista.registrar_viagem(self)
         veiculo.registrar_viagem(self)
 
@@ -52,17 +52,50 @@ class Viagem:
     def data(self):
         return self.__data
 
-    def executar(self) -> None:
-        """Executa a viagem: atualiza registros básicos (sem persistência)."""
-        # atualiza quilometragem do veículo
-        nova_km = self.veiculo.quilometragem + self.distancia
-        self.veiculo.quilometragem = nova_km
-        # registra no motorista
-        try:
-            self.motorista.registrar_viagem(self)
-        except Exception:
-            # registrar_viagem pode não existir se Motorista não for do tipo esperado -> arrumar posteriormente
-            pass
+    def executar(self, config):
+        """
+        Regras de negócio da Entrega 4
+        """
+        compatibilidade = config["compatibilidade_cnh"]
+        politicas = config["politicas"]
+
+        # ============================
+        # Regra 1 — CNH compatível
+        # ============================
+        tipo_veiculo = self.veiculo.tipo
+        categoria_motorista = self.motorista.categoria_cnh
+
+        if categoria_motorista not in compatibilidade[tipo_veiculo]:
+            raise ValueError(f"CNH incompatível: motorista {categoria_motorista} "
+                             f"não pode dirigir {tipo_veiculo}")
+
+        # ============================
+        # Regra 2 — Veículo deve estar ativo
+        # ============================
+        if self.veiculo.status != EstadoVeiculo.ATIVO:
+            raise ValueError("Veículo não está ativo para realizar a viagem.")
+
+        # ============================
+        # Regra 3 — Atualizar quilometragem
+        # ============================
+        self.veiculo.atualizar_quilometragem(self.distancia)
+
+        # ============================
+        # Regra 4 — Registrar no histórico do motorista
+        # ============================
+        self.motorista.registrar_viagem(self)
+
+        # ============================
+        # Regra 5 — Checar revisão obrigatória
+        # ============================
+        limite_km = politicas["limite_revisao_km"]
+
+        if self.veiculo.quilometragem >= limite_km:
+            self.veiculo.alterar_status(EstadoVeiculo.MANUTENCAO)
+
+    def __str__(self):
+        return f"{self.origem} → {self.destino} ({self.distancia} km)"
+
 
 class ViagemCRUD:
 
