@@ -1,114 +1,111 @@
-from typing import List, Iterator, Any
-from .estado import EstadoVeiculo
+from typing import List, Dict, Any
+from .pessoa import Pessoa # Herança
 
+class Motorista(Pessoa):
+    """Representa um motorista da frota, herda atributos de Pessoa."""
 
-class Veiculo:
-    """
-    Base class.
-
-    Attributes:
-        __placa (str)
-        __marca (str)
-        __modelo (str)
-        __tipo (str)
-        __ano (int)
-        __quilometragem (float)
-        __consumo_medio (float)
-        __status (EstadoVeiculo)
-        __historico_eventos (List[str])
-    """
-
-    def __init__(self, nome, cpf, categoria_cnh, experiencia, disponibilidade=True):
+    def __init__(
         self,
-        placa: str,
-        marca: str,
-        modelo: str,
-        tipo: str,
-        ano: int,
-        quilometragem: float = 0.0,
-        consumo_medio: float = 0.0,
-        status: EstadoVeiculo = EstadoVeiculo.ATIVO,
+        nome: str,
+        cpf: str,
+        categoria_cnh: str,
+        experiencia: int,
+        disponibilidade: bool = True,
+        historico_viagens: List[Dict[str, Any]] = None # Para reconstrução via Mapper
     ) -> None:
-        self.__placa = placa
-        self.__marca = marca
-        self.__modelo = modelo
-        self.__tipo = tipo
-        self.__ano = ano
-        self.__quilometragem = float(max(0.0, quilometragem))
-        self.__consumo_medio = float(max(0.0, consumo_medio))
-        self.__status = EstadoVeiculo.ATIVO
-        self.__historico_eventos: List[str] = []
-        self.nome = nome
-        self.cpf = cpf
-        self.categoria_cnh = categoria_cnh
-        self.experiencia = experiencia
-        self.disponibilidade = disponibilidade
-        self.historico_viagens = []
+        super().__init__(nome, cpf)
         
-
-    # --------------------
-    # properties (getters/setters)
-    # --------------------
-    @property
-    def placa(self) -> str:
-        return self.__placa
-
-    @placa.setter
-    def placa(self, v: str) -> None:
-        self.__placa = v
+        self.__categoria_cnh = categoria_cnh.upper()
+        self.__experiencia = experiencia
+        self.__disponibilidade = disponibilidade
+        self.__historico_viagens: List[Dict[str, Any]] = historico_viagens if historico_viagens is not None else []
 
     @property
-    def marca(self) -> str:
-        return self.__marca
-
-    @marca.setter
-    def marca(self, v: str) -> None:
-        self.__marca = v
+    def categoria_cnh(self) -> str:
+        return self.__categoria_cnh
 
     @property
-    def modelo(self) -> str:
-        return self.__modelo
-
-    @modelo.setter
-    def modelo(self, v: str) -> None:
-        self.__modelo = v
+    def experiencia(self) -> int:
+        return self.__experiencia
 
     @property
-    def tipo(self) -> str:
-        return self.__tipo
+    def disponibilidade(self) -> bool:
+        return self.__disponibilidade
 
-    @tipo.setter
-    def tipo(self, v: str) -> None:
-        self.__tipo = v
-
-    @property
-    def ano(self) -> int:
-        return self.__ano
-
-    @ano.setter
-    def ano(self, v: int) -> None:
-        self.__ano = int(v)
+    @disponibilidade.setter
+    def disponibilidade(self, v: bool) -> None:
+        self.__disponibilidade = v
 
     @property
-    def quilometragem(self) -> float:
-        return self.__quilometragem
+    def historico_viagens(self) -> List[Dict[str, Any]]:
+        return list(self.__historico_viagens)
+        
+    def registrar_viagem(self, viagem) -> None:
+        """Registra a viagem no histórico do motorista."""
+        self.__historico_viagens.append({
+            "origem": viagem.origem,
+            "destino": viagem.destino,
+            "distancia": viagem.distancia,
+            "veiculo_placa": viagem.veiculo.placa,
+            "data": viagem.data.isoformat()
+        })
 
-    @quilometragem.setter
-    def quilometragem(self, v: float) -> None:
-        if v < 0:
-            raise ValueError("Quilometragem não pode ser negativa.")
-        self.__quilometragem = float(v)
+    def __str__(self) -> str:
+        return f"{self.nome} ({self.cpf}) - CNH: {self.categoria_cnh}"
+from typing import List, Dict, Any
+from .pessoa import Pessoa # Herança
+
+class Motorista(Pessoa):
+    """Representa um motorista da frota, herda atributos de Pessoa."""
+
+    def __init__(
+        self,
+        nome: str,
+        cpf: str,
+        categoria_cnh: str,
+        experiencia: int,
+        disponibilidade: bool = True,
+        historico_viagens: List[Dict[str, Any]] = None # Para reconstrução via Mapper
+    ) -> None:
+        super().__init__(nome, cpf)
+        
+        self.__categoria_cnh = categoria_cnh.upper()
+        self.__experiencia = experiencia
+        self.__disponibilidade = disponibilidade
+        self.__historico_viagens: List[Dict[str, Any]] = historico_viagens if historico_viagens is not None else []
 
     @property
-    def consumo_medio(self) -> float:
-        return self.__consumo_medio
+    def categoria_cnh(self) -> str:
+        return self.__categoria_cnh
 
-    @consumo_medio.setter
-    def consumo_medio(self, v: float) -> None:
-        if v < 0:
-            raise ValueError("Consumo médio não pode ser negativo.")
-        self.__consumo_medio = float(v)
+    @property
+    def experiencia(self) -> int:
+        return self.__experiencia
 
+    @property
+    def disponibilidade(self) -> bool:
+        return self.__disponibilidade
+
+    @disponibilidade.setter
+    def disponibilidade(self, v: bool) -> None:
+        self.__disponibilidade = v
+
+    @property
+    def historico_viagens(self) -> List[Dict[str, Any]]:
+        return list(self.__historico_viagens)
+        
+    def registrar_viagem(self, viagem) -> None:
+        """Registra a viagem no histórico do motorista."""
+        self.__historico_viagens.append({
+            "origem": viagem.origem,
+            "destino": viagem.destino,
+            "distancia": viagem.distancia,
+            "veiculo_placa": viagem.veiculo.placa,
+            "data": viagem.data.isoformat()
+        })
+
+    def __str__(self) -> str:
+        return f"{self.nome} ({self.cpf}) - CNH: {self.categoria_cnh}"
     @property
     def status(self) -> EstadoVeiculo:
         return self.__status
