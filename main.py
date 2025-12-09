@@ -58,7 +58,7 @@ def cadastrar_veiculo_cli(vc: VeiculoCRUD):
 
     try:
         vc.salvar(novo_veiculo)
-        print(f"✅ Veículo {placa} ({tipo}) cadastrado com sucesso!")
+        print(f"🟢 Veículo {placa} ({tipo}) cadastrado com sucesso!")
     except Exception as e:
         print(f"❌ Erro ao salvar veículo: {e}")
 
@@ -77,7 +77,7 @@ def cadastrar_motorista_cli(mc: MotoristaCRUD):
     
     try:
         mc.salvar(novo_motorista)
-        print(f"✅ Motorista {nome} cadastrado com sucesso!")
+        print(f"🟢 Motorista {nome} cadastrado com sucesso!")
     except Exception as e:
         print(f"❌ Erro ao salvar motorista: {e}")
 
@@ -108,7 +108,7 @@ def executar_viagem_cli(config, vc: VeiculoCRUD, mc: MotoristaCRUD, vic: ViagemC
     try:
         viagem.executar(config)
         vic.salvar(viagem) # Salva a Viagem e atualiza Veículo/Motorista
-        print(f"✅ Viagem executada com sucesso! KM do veículo atualizada.")
+        print(f"🟢 Viagem executada com sucesso! KM do veículo atualizada.")
         
         # Alerta de regra de negócio ativada
         if veiculo.status == EstadoVeiculo.MANUTENCAO:
@@ -117,8 +117,8 @@ def executar_viagem_cli(config, vc: VeiculoCRUD, mc: MotoristaCRUD, vic: ViagemC
     except ValueError as e:
         print(f"❌ ERRO DE REGRA DE NEGÓCIO: {e}")
     except Exception as e:
-        print(f"❌ Erro inesperado: {e}")
-
+        print(f"⚠ Erro inesperado: {e}")
+⚠
 
 # ============================
 # Main Loop CLI
@@ -154,16 +154,19 @@ def main():
             
         elif escolha == '3':
             executar_viagem_cli(config, vc, mc, vic)
+
+        elif escolha == '4':
             
-        elif escolha == '4.1':
+
+            if escolha == '4.1':
             veiculos = vc.listar()
             relatorio_veiculos_por_status(veiculos, EstadoVeiculo.ATIVO)
             
-        elif escolha == '4.2':
+            if escolha == '4.2':
             banco = REPO.carregar()
             relatorio_resumo_sistema(banco)
             
-        elif escolha == '4.3':
+            elif escolha == '4.3':
             cpf = input("CPF do Motorista para relatório: ")
             motorista = mc.buscar_por_cpf(cpf)
             if motorista:
@@ -171,7 +174,7 @@ def main():
             else:
                 print("Motorista não encontrado.")
             
-        elif escolha == '0':
+            elif escolha == '0':
             print("Saindo do sistema. Tchau!")
             break
         
