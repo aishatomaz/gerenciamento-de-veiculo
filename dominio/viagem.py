@@ -2,13 +2,10 @@ from datetime import date
 from typing import Optional
 from .motorista import Motorista
 from .veiculo import Veiculo
-from mapper.viagm_mapper import ViagemMapper
-from dominio.estado import EstadoVeiculo
-
-
+from .estado import EstadoVeiculo
 
 class Viagem:
-    """Representa uma viagem realizada por um motorista com um veículo."""
+    """Representa uma viagem realizada (RT: Relacionamento, Regras de Negócio)."""
 
     def __init__(
         self,
@@ -25,8 +22,6 @@ class Viagem:
         self.__destino = destino
         self.__distancia = float(distancia)
         self.__data = data or date.today()
-        motorista.registrar_viagem(self)
-        veiculo.registrar_viagem(self)
 
     @property
     def motorista(self) -> Motorista:
@@ -37,78 +32,44 @@ class Viagem:
         return self.__veiculo
 
     @property
-    def origem(self) -> str:
-        return self.__origem
-
-    @property
-    def destino(self) -> str:
-        return self.__destino
-
-    @property
     def distancia(self) -> float:
         return self.__distancia
-
+    
     @property
     def data(self):
         return self.__data
-
+    
     def executar(self, config):
         """
-        Regras de negócio da Entrega 4
+        Executa a viagem e aplica as regras de negócio: CNH, status, atualização KM, revisão.
         """
         compatibilidade = config["compatibilidade_cnh"]
         politicas = config["politicas"]
 
-        # ============================
-        # Regra 1 — CNH compatível
-        # ============================
+        # 1. Regra CNH compatível (RT: Validação)
         tipo_veiculo = self.veiculo.tipo
         categoria_motorista = self.motorista.categoria_cnh
 
-        if categoria_motorista not in compatibilidade[tipo_veiculo]:
-            raise ValueError(f"CNH incompatível: motorista {categoria_motorista} "
-                             f"não pode dirigir {tipo_veiculo}")
+        if tipo_veiculo not in compatibilidade or categoria_motorista not in compatibilidade[tipo_veiculo]:
+            raise ValueError(f"CNH incompatível: Motorista {categoria_motorista} não pode dirigir {tipo_veiculo}.")
 
-        # ============================
-        # Regra 2 — Veículo deve estar ativo
-        # ============================
+        # 2. Regra Veículo deve estar ativo (RT: Bloqueio de alocação)
         if self.veiculo.status != EstadoVeiculo.ATIVO:
-            raise ValueError("Veículo não está ativo para realizar a viagem.")
+            raise ValueError(f"Veículo {self.veiculo.placa} indisponível. Status: {self.veiculo.status.value}")
 
-        # ============================
-        # Regra 3 — Atualizar quilometragem
-        # ============================
+        # 3. Atualizar quilometragem
         self.veiculo.atualizar_quilometragem(self.distancia)
 
-        # ============================
-        # Regra 4 — Registrar no histórico do motorista
-        # ============================
-        self.motorista.registrar_viagem(self)
+        # 4. Checar revisão obrigatória (RT: Regra Configurável)
+        limite_km = politicas.get("limite_revisao_km", 10000)
 
-        # ============================
-        # Regra 5 — Checar revisão obrigatória
-        # ============================
-        limite_km = politicas["limite_revisao_km"]
-
-        if self.veiculo.quilometragem >= limite_km:
+        if self.veiculo.quilometragem >= limite_km and self.veiculo.status == EstadoVeiculo.ATIVO:
             self.veiculo.alterar_status(EstadoVeiculo.MANUTENCAO)
+            self.veiculo.registrar_evento(f"ENTROU EM MANUTENÇÃO: Limite de KM ({limite_km}km) atingido.")
 
-    def __str__(self):
-        return f"{self.origem} → {self.destino} ({self.distancia} km)"
-
-
-class ViagemCRUD:
-
-    def __init__(self, repo):
-        self.repo = repo
-
-    def salvar(self, viagem):
-        banco = self.repo.carregar()
-        viagem_dict = ViagemMapper.to_dict(viagem)
-
-        banco["viagens"].append(viagem_dict)
-        self.repo.salvar(banco)
-
+        # 5. Registrar no histórico após sucesso
+        self.veiculo.registrar_viagem(self)
+        self.motorista.registrar_viagem(self)
     def listar(self):
         banco = self.repo.carregar()
         return [
