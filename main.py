@@ -165,7 +165,7 @@ def main():
             banco = REPO.carregar()
             relatorio_resumo_sistema(banco)
             
-            elif escolha == '4.3':
+            if escolha == '4.3':
             cpf = input("CPF do Motorista para relatório: ")
             motorista = mc.buscar_por_cpf(cpf)
             if motorista:
@@ -182,3 +182,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
