@@ -58,9 +58,9 @@ def cadastrar_veiculo_cli(vc: VeiculoCRUD):
 
     try:
         vc.salvar(novo_veiculo)
-        print(f"🟢 Veículo {placa} ({tipo}) cadastrado com sucesso!")
+        print(f" Veículo {placa} ({tipo}) cadastrado com sucesso!")
     except Exception as e:
-        print(f"❌ Erro ao salvar veículo: {e}")
+        print(f" Erro ao salvar veículo: {e}")
 
 def cadastrar_motorista_cli(mc: MotoristaCRUD):
     print("\n--- Cadastro de Novo Motorista ---")
@@ -77,9 +77,9 @@ def cadastrar_motorista_cli(mc: MotoristaCRUD):
     
     try:
         mc.salvar(novo_motorista)
-        print(f"🟢 Motorista {nome} cadastrado com sucesso!")
+        print(f" Motorista {nome} cadastrado com sucesso!")
     except Exception as e:
-        print(f"❌ Erro ao salvar motorista: {e}")
+        print(f" Erro ao salvar motorista: {e}")
 
 
 def executar_viagem_cli(config, vc: VeiculoCRUD, mc: MotoristaCRUD, vic: ViagemCRUD):
@@ -108,17 +108,16 @@ def executar_viagem_cli(config, vc: VeiculoCRUD, mc: MotoristaCRUD, vic: ViagemC
     try:
         viagem.executar(config)
         vic.salvar(viagem) # Salva a Viagem e atualiza Veículo/Motorista
-        print(f"🟢 Viagem executada com sucesso! KM do veículo atualizada.")
+        print(f"Viagem executada com sucesso! KM do veículo atualizada.")
         
         # Alerta de regra de negócio ativada
         if veiculo.status == EstadoVeiculo.MANUTENCAO:
-             print(f"🚨 ATENÇÃO: Veículo {placa} atingiu o limite de KM e foi movido para MANUTENÇÃO!")
+             print(f"ATENÇÃO: Veículo {placa} atingiu o limite de KM e foi movido para MANUTENÇÃO!")
 
     except ValueError as e:
-        print(f"❌ ERRO DE REGRA DE NEGÓCIO: {e}")
+        print(f"ERRO DE REGRA DE NEGÓCIO: {e}")
     except Exception as e:
         print(f"⚠ Erro inesperado: {e}")
-⚠
 
 # ============================
 # Main Loop CLI
@@ -156,7 +155,7 @@ def main():
             executar_viagem_cli(config, vc, mc, vic)
 
         elif escolha == '4':
-            
+
 
             if escolha == '4.1':
             veiculos = vc.listar()
