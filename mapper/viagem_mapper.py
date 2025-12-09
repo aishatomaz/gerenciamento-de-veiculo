@@ -1,39 +1,19 @@
 from dominio.viagem import Viagem
-from dominio.motorista import MotoristaCRUD
-from dominio.veiculo import VeiculoCRUD
-
+from dominio.motorista import Motorista
+from dominio.veiculo import Veiculo
+from typing import Dict, Any
 
 class ViagemMapper:
-
+    """Mapeia o objeto Viagem, usando apenas identificadores para Motorista/Veículo."""
+    
     @staticmethod
-    def to_dict(viagem: Viagem) -> dict:
+    def to_dict(viagem: Viagem) -> Dict[str, Any]:
         return {
-            "motorista": viagem.motorista.cpf,
-            "veiculo": viagem.veiculo.placa,
+            "motorista_cpf": viagem.motorista.cpf,
+            "veiculo_placa": viagem.veiculo.placa,
             "origem": viagem.origem,
             "destino": viagem.destino,
-            "distancia": viagem.distancia
+            "distancia": viagem.distancia,
+            "data": viagem.data.isoformat()
         }
-
-    @staticmethod
-    def to_object(data: dict, repo) -> Viagem:
-        """
-        repo = JsonRepository
-        Necessário para reconstruir Motorista e Veículo.
-        """
-
-        mcrud = MotoristaCRUD(repo)
-        vcrud = VeiculoCRUD(repo)
-
-        motorista = mcrud.buscar_por_cpf(data["motorista"])
-        veiculo = vcrud.buscar_por_placa(data["veiculo"])
-
-        viagem = Viagem(
-            motorista,
-            veiculo,
-            data["origem"],
-            data["destino"],
-            data["distancia"]
-        )
-
-        return viagem
+    # Será implementado no Service, simplificando o Mapper
