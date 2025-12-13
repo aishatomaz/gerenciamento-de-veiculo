@@ -1,6 +1,5 @@
 from typing import Any
 
-
 class Pessoa:
     """Representa uma pessoa básica (base para Motorista)."""
 
@@ -11,18 +10,12 @@ class Pessoa:
     @property
     def nome(self) -> str:
         return self.__nome
-
-    @nome.setter
-    def nome(self, v: str) -> None:
-        self.__nome = v
+    
+    # Setters Omitidos
 
     @property
     def cpf(self) -> str:
         return self.__cpf
-
-    @cpf.setter
-    def cpf(self, v: str) -> None:
-        self.__cpf = v
 
     def __str__(self) -> str:
         return f"{self.__nome} ({self.__cpf})"

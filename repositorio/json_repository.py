@@ -1,23 +1,30 @@
 import json
-from typing import Any, List, Optional
-
+import os
 
 class JsonRepository:
     """
-    Repositório muito simples para salvar/ler listas de dicionários em JSON.
-    Implementação intencionalmente mínima para a Entrega 2.
+    Repositório simples para leitura e escrita de um banco JSON.
+    O banco contém as chaves: veiculos, motoristas e viagens.
     """
 
-    def __init__(self, arquivo: str):
-        self.arquivo = arquivo
+    def __init__(self, filepath="database.json"):
+        self.filepath = filepath
 
-    def salvar(self, dados: List[dict]) -> None:
-        with open(self.arquivo, "w", encoding="utf-8") as f:
-            json.dump(dados, f, ensure_ascii=False, indent=2)
+        # Caso o arquivo não exista, cria com estrutura vazia
+        if not os.path.exists(self.filepath):
+            with open(self.filepath, "w", encoding="utf-8") as f:
+                json.dump({
+                    "veiculos": [],
+                    "motoristas": [],
+                    "viagens": []
+                }, f, indent=4, ensure_ascii=False)
 
-    def carregar(self) -> Optional[List[dict]]:
-        try:
-            with open(self.arquivo, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except FileNotFoundError:
-            return None
+    def carregar(self) -> dict:
+        """Retorna o conteúdo completo do banco de dados JSON."""
+        with open(self.filepath, "r", encoding="utf-8") as f:
+            return json.load(f)
+
+    def salvar(self, dados: dict) -> None:
+        """Salva a estrutura inteira de volta no JSON."""
+        with open(self.filepath, "w", encoding="utf-8") as f:
+            json.dump(dados, f, indent=4, ensure_ascii=False)

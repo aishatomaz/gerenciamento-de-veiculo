@@ -1,12 +1,12 @@
 from .veiculo import Veiculo
 from .mixins import ManutenivelMixin, AbastecivelMixin
+from typing import Iterator
 
 class Moto(Veiculo, ManutenivelMixin, AbastecivelMixin):
-    """
-    Representa uma motocicleta. Requer CNH "A" e herda as funcionalidades
-    necessárias.
-    """
-    def __init__(self, placa, marca, modelo, ano, quilometragem, consumo_medio):
-        super().__init__(placa, marca, modelo, ano, quilometragem, consumo_medio, tipo='Moto')
-        ManutenivelMixin.__init__(self)
+    def __init__(self, placa, marca, modelo, ano, quilometragem=0.0, consumo_medio=0.0):
+        super().__init__(placa, marca, modelo, 'Moto', ano, quilometragem, consumo_medio)
         AbastecivelMixin.__init__(self)
+        ManutenivelMixin.__init__(self)
+
+    def __iter__(self) -> Iterator[str]:
+        return iter(self.historico_eventos + [f"Maint.: {m['data']}" for m in self.historico_manutencoes])
