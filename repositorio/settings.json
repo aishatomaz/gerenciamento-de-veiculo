@@ -1,0 +1,23 @@
+{
+    "politicas": {
+        "limite_revisao_km": 10000,
+        "faixa_consumo_aceitavel": {
+            "min": 8.0,
+            "max": 15.0
+        },
+        "custos_manutencao": {
+            "preventiva": 150.00,
+            "corretiva": 500.00
+        }
+    },
+
+    "compatibilidade_cnh": {
+        "Moto": ["A"],
+        "Carro": ["B", "C", "D", "E"],
+        "Caminhao": ["C", "D", "E"]
+    },
+
+    "veiculos": [],
+    "motoristas": [],
+    "viagens": []
+}

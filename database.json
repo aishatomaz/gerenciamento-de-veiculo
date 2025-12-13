@@ -1,0 +1,84 @@
+{
+    "veiculos": [
+        {
+            "placa": "ABC1234",
+            "marca": "Honda",
+            "modelo": "Civic",
+            "tipo": "Carro",
+            "ano": 2020,
+            "quilometragem": 0.0,
+            "consumo_medio": 12.5,
+            "status": "Ativo",
+            "historico_abastecimentos": [],
+            "historico_manutencoes": []
+        },
+        {
+            "placa": "1234",
+            "marca": "toyota",
+            "modelo": "algo",
+            "tipo": "Moto",
+            "ano": 3,
+            "quilometragem": 0.0,
+            "consumo_medio": 0.0,
+            "status": "Ativo",
+            "historico_abastecimentos": [],
+            "historico_manutencoes": []
+        },
+        {
+            "placa": "0",
+            "marca": "carro",
+            "modelo": "uo",
+            "tipo": "Moto",
+            "ano": 4,
+            "quilometragem": 0.0,
+            "consumo_medio": 0.0,
+            "status": "Ativo",
+            "historico_abastecimentos": [],
+            "historico_manutencoes": []
+        }
+    ],
+    "motoristas": [
+        {
+            "nome": "João Silva",
+            "cpf": "12345678900",
+            "categoria_cnh": "B",
+            "experiencia": 5,
+            "disponibilidade": true,
+            "historico_viagens": []
+        },
+        {
+            "nome": "tomaz",
+            "cpf": "12345",
+            "categoria_cnh": "AA",
+            "experiencia": 2,
+            "disponibilidade": true,
+            "historico_viagens": []
+        },
+        {
+            "nome": "aisha",
+            "cpf": "1234",
+            "categoria_cnh": "A",
+            "experiencia": 4,
+            "disponibilidade": true,
+            "historico_viagens": []
+        }
+    ],
+    "viagens": [
+        {
+            "motorista_cpf": "12345678900",
+            "veiculo_placa": "ABC1234",
+            "origem": "A",
+            "destino": "B",
+            "distancia": 100.0,
+            "data": "2025-12-12"
+        },
+        {
+            "motorista_cpf": "1234",
+            "veiculo_placa": "1234",
+            "origem": "crato",
+            "destino": "jua",
+            "distancia": 15.0,
+            "data": "2025-12-13"
+        }
+    ]
+}
