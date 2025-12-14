@@ -13,7 +13,6 @@ class SqliteRepository:
     def __init__(self, banco: str = ":memory:"):
         self.banco = banco
         self.con = sqlite3.connect(self.banco)
-        # Observação: criação de tabelas fica para etapas seguintes.
 
     def salvar(self, objeto: Any) -> None:
         # placeholder
