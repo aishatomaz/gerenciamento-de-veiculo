@@ -16,4 +16,3 @@ class ViagemMapper:
             "distancia": viagem.distancia,
             "data": viagem.data.isoformat()
         }
-    # Será implementado no Service, simplificando o Mapper

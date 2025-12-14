@@ -38,15 +38,32 @@ class VeiculoMapper:
         tipo = data["tipo"]
         cls = VEICULO_CLASSES.get(tipo, Veiculo)
         
-        v: Veiculo = cls(
-            data["placa"],
-            data["marca"],
-            data["modelo"],
-            data["ano"],
-            data.get("quilometragem", 0.0),
-            data.get("consumo_medio", 0.0),
-            EstadoVeiculo(data["status"]), # Passa status no construtor
-        )
+        # As subclasses (Carro, Moto, Caminhao) não recebem 'tipo' nem 'status' no construtor
+        # Elas definem o tipo internamente e herdam status da classe Veiculo
+        if cls in [Carro, Moto, Caminhao]:
+            v: Veiculo = cls(
+                placa=data["placa"],
+                marca=data["marca"],
+                modelo=data["modelo"],
+                ano=data["ano"],
+                quilometragem=data.get("quilometragem", 0.0),
+                consumo_medio=data.get("consumo_medio", 0.0)
+            )
+            # Ajustar o status após a criação
+            status_valor = data.get("status", "Ativo")
+            v.alterar_status(EstadoVeiculo(status_valor))
+        else:
+            # Para a classe base Veiculo
+            v: Veiculo = cls(
+                placa=data["placa"],
+                marca=data["marca"],
+                modelo=data["modelo"],
+                tipo=data["tipo"],
+                ano=data["ano"],
+                quilometragem=data.get("quilometragem", 0.0),
+                consumo_medio=data.get("consumo_medio", 0.0),
+                status=EstadoVeiculo(data.get("status", "Ativo"))
+            )
         
         # Injeção de Históricos (se a classe for um Mixin)
         if isinstance(v, (Carro, Moto, Caminhao)):
