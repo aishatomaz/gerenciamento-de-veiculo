@@ -192,18 +192,18 @@ def main():
             
         elif escolha == '4':
             print("\n--- Opções de Relatório ---")
-            print("  4.1. Veículos Ativos")
-            print("  4.2. Resumo Geral (Banco de Dados)")
-            print("  4.3. Viagens por Motorista")
+            print("  1. Veículos Ativos")
+            print("  2. Resumo Geral (Banco de Dados)")
+            print("  3. Viagens por Motorista")
             sub_escolha = input(">>> Digite a opção do relatório (ex: 4.1): ")
             
-            if sub_escolha == '4.1':
+            if sub_escolha == '1':
                 veiculos = vc.listar()
                 relatorio_veiculos_por_status(veiculos, EstadoVeiculo.ATIVO)
-            elif sub_escolha == '4.2':
+            elif sub_escolha == '2':
                 banco = REPO.carregar()
                 relatorio_resumo_sistema(banco)
-            elif sub_escolha == '4.3':
+            elif sub_escolha == '3':
                 cpf = input("  CPF do Motorista para relatório: ")
                 motorista = mc.buscar_por_cpf(cpf)
                 if motorista:

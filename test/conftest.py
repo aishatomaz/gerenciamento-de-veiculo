@@ -11,6 +11,7 @@ def veiculo_base():
         placa="ABC1234",
         marca="Honda",
         modelo="Fit",
+        tipo="Carro",
         ano=2020,
         quilometragem=10000
     )

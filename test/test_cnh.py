@@ -1,6 +1,10 @@
+from dominio.motorista import Motorista
+from dominio.veiculo import Veiculo
+from dominio.viagem import Viagem
+
 def test_cnh_incompativel():
     m = Motorista("Aisha", "123", "B", 2, True)
-    v = Veiculo("AAA0000", "Yamaha", "XTZ", 2020, 0, tipo="Moto")
+    v = Veiculo(placa="AAA0000", marca="Yamaha", modelo="XTZ", tipo="Moto", ano=2020, quilometragem=0)
 
     viagem = Viagem(m, v, "A", "B", 10)
 
