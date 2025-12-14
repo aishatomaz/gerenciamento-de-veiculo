@@ -13,9 +13,9 @@ def relatorio_viagens_por_motorista(motorista):
         return
 
     for viagem in motorista.historico_viagens:
-        print(f"Origem: {viagem.origem}")
-        print(f"Destino: {viagem.destino}")
-        print(f"Distância: {viagem.distancia} km")
+        print(f"Origem: {viagem['origem']}")
+        print(f"Destino: {viagem['destino']}")
+        print(f"Destino: {viagem['distancia']} km")
         print("-" * 60)
 
 
