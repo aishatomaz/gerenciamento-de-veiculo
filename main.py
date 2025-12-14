@@ -1,5 +1,6 @@
-import json
+import sys
 import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from datetime import date
 from dominio.veiculo import Veiculo
 from dominio.motorista import Motorista
