@@ -70,6 +70,7 @@ class Viagem:
         # 5. Registrar no histórico após sucesso
         self.veiculo.registrar_viagem(self)
         self.motorista.registrar_viagem(self)
+    
     def listar(self):
         banco = self.repo.carregar()
         return [
