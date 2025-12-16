@@ -35,6 +35,22 @@ Este projeto implementa um sistema de gerenciamento de frota para registrar veí
  ├── settings.json <br>
  └── UML.md <br> 
 
+ # COMO EXECUTAR
+ - Clone o repositório com:
+```bash
+git clonee <url-do-reepositorio> (recomendo intalar a versão mais recente)
+```
+ - Acesse a pasta do projeto
+```bash
+cd gerenciamento-de-veiculo
+```
+ - Para executar:
+```bash
+python main.oy
+ou
+python -m main
+```
+
 # UML Textual 
 
 +-----------------------------------------------------+ <br>
