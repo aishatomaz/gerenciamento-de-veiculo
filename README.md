@@ -18,27 +18,52 @@ Este projeto implementa um sistema de gerenciamento de frota para registrar veí
 # ESTRUTURA
 /veiculo <br>
  ├── dominio/ <br>
+ │    ├── __init__.py <br>
  │    ├── caminhao.py <br>
  │    ├── carro.py <br>
  │    ├── estado.py <br>
  │    ├── mixins.py <br>
  │    ├── moto.py <br>
  │    ├── motorista.py <br>
+ │    ├── pessoa.py <br>
+ │    ├── relatorio.py <br>
  │    ├── veiculo.py <br>
  │    └── viagem.py <br>
+ ├── mapper/ <br>
+ │    ├── __init__.py <br>
+ │    ├── motorista_mapper.py <br>
+ │    ├── veiculo_mapper.py <br>
+ │    └── viagem_mapper.py <br>
  ├── repositorio/ <br>
+ │    ├── __init__.py <br>
  │    ├── json_repository.py <br>
+ │    ├── settings.json <br>
  │    └── sqlite_repository.py <br>
+ ├── service/ <br>
+ │    ├── __init__.py <br>
+ │    ├── motorista_service.py <br>
+ │    ├── veiculo_service.py <br>
+ │    └── viagem_service.py <br>
+ ├── test/ <br>
+ │    ├── conftest.py <br>
+ │    ├── test_cnh.py <br>
+ │    ├── test_mixins.py <br>
+ │    ├── test_motorista.py <br>
+ │    ├── test_viagem.py <br>
+ │    ├── tst_veiculo.py <br>
+ ├── database.json <br>
+ ├── fix.ps1 <br>
  ├── LICENSE <br>
  ├── main.py <br>
+ ├── pytest.ini <br>
  ├── README.md <br>
  ├── settings.json <br>
  └── UML.md <br> 
 
  # COMO EXECUTAR
- - Clone o repositório com:
+ - Clone o repositório com: (peguei a versão mais recent em: TAGS)
 ```bash
-git clonee <url-do-reepositorio> (recomendo intalar a versão mais recente)
+git clonee <url-do-reepositorio>
 ```
  - Acesse a pasta do projeto
 ```bash
@@ -47,9 +72,17 @@ cd gerenciamento-de-veiculo
  - Para executar:
 ```bash
 python main.oy
-ou
+```
+### ou
+```bash
 python -m main
 ```
+## Em caso de erros com cache ou pastas não encontradas acessar arquivo e seguir suas instruções
+```bash
+fix.ps1
+```
+
+_________________________________________________________________________________________________________
 
 # UML Textual 
 
