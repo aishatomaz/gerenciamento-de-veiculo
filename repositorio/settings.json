@@ -14,7 +14,8 @@
     "compatibilidade_cnh": {
         "Moto": ["A"],
         "Carro": ["B", "C", "D", "E"],
-        "Caminhao": ["C", "D", "E"]
+        "Caminhao": ["C", "D", "E"],
+        "Aviao": ["D","E"]
     },
 
     "veiculos": [],
